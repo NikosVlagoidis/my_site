@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+    <meta charset="utf-8">
+    <title>Nikolaos Vlagoidis</title>
+    <!-- jQuery --->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <!-- p5 --->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.2/p5.js" integrity="sha256-q4aNm5CQNJ0NZ+H+3K+ICuUAkEASQB5cd6flBVQwDH4=" crossorigin="anonymous"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!-- Source Pro Font -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
+    <!-- Load Static from project -->
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}" />
+</head>
+
+<body>
+    It is now {{ current_date }}
+    <header>
+        <div>
+            <h1 class="title-global"><a href="/">Vlagoidis Nikolaos</a></h1>
+            <nav>
+                <ul>
+                    <li><a href="#">[About Me]</a></li>
+                    <li><a href="#">[Portfolio]</a></li>
+                    <li><a href="#">[Blog]</a></li>
+                    <li><a href="#">[Log In]</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <h2>
+       Site Under Construction <span id="Foo">...</span>
+    </h2>
+    <br />
+    <br />
+    <p>
+        Meanwhile have some fun!
+        <input type="button" class="btn btn-default" value="Restart Game" onClick="window.location.reload()"></p>
+
+
+
+</body>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var f = document.getElementById('Foo');
+        setInterval(function() {
+            f.style.display = (f.style.display == 'none' ? '' : 'none');
+        }, 500);
+
+    });
+</script>
+
+<script>
+    var foods = [];
+    var food, snake;
+
+    var old_touchX, old_touchY;
+
+    function setup() {
+        createCanvas(500, 500);
+        if (detectMob()) {
+            console.log("Mobile");
+            setFrameRate(7);
+        } else {
+            setFrameRate(5);
+        }
+        for (var i = 0; i < 6; i++) {
+            pickFoodLocation();
+            foods.push(food);
+        }
+        snake = new Snake();
+
+        if (snake.x > (500 / 2))
+            snake.set_dir(-1, 0);
+    }
+
+    function detectMob() {
+        if ((500 < 750 && 500 < 450) || (500 < 450 && 500 < 750))
+            return true;
+        else
+            return false;
+    }
+
+    function draw() {
+        background(51);
+        stroke('white');
+        fill('white');
+        textStyle(NORMAL);
+        textSize(18);
+        text('Score : ' + snake.score, 30, 30);
+        //noCursor();
+        //create food based on random location
+
+        for (var i = 0; i < 6; i++) {
+            ellipseMode(CORNER);
+            if (i != 5 && (i + 1) % 2 == 0) {
+                fill('greenyellow');
+                stroke('greenyellow');
+            } else if ((i + 1) % 3 == 0) {
+                fill('crimson')
+                stroke('crimson');
+            } else {
+                fill('lightskyblue')
+                stroke('lightskyblue');
+            }
+            ellipse(foods[i].x, foods[i].y, 20, 20);
+        }
+
+        snake.update();
+        snake.display();
+        if (snake.eat()) {
+            pickFoodLocation();
+            foods[snake.eatAt] = food;
+        }
+        if (snake.die()) {
+            stroke('white');
+            fill('white');
+            textSize(24);
+            text('GAME OVER', 500 / 2, 500 / 2);
+            noLoop();
+        }
+    }
+
+    function keyPressed() {
+        if ((keyCode === LEFT_ARROW && snake.xDir != 1 && snake.snakeLength != 0) || (keyCode === LEFT_ARROW && snake.snakeLength == 0)) {
+            snake.set_dir(-1, 0);
+        } else if ((keyCode === RIGHT_ARROW && snake.xDir != -1 && snake.snakeLength != 0) || (keyCode === RIGHT_ARROW && snake.snakeLength == 0)) {
+            snake.set_dir(1, 0);
+        } else if ((keyCode === UP_ARROW && snake.yDir != 1 && snake.snakeLength != 0) || (keyCode === UP_ARROW && snake.snakeLength == 0)) {
+            snake.set_dir(0, -1);
+        } else if ((keyCode === DOWN_ARROW && snake.yDir != -1 && snake.snakeLength != 0) || (keyCode === DOWN_ARROW && snake.snakeLength == 0)) {
+            snake.set_dir(0, 1);
+        }
+        return false;
+    }
+
+    function touchStarted() {
+        //console.log("started - > " + floor(touchX) + "," + floor(touchY));
+        old_touchX = touchX;
+        old_touchY = touchY;
+        return false;
+    }
+
+    function touchMoved() {
+        //to avoid browsers scroll  or drag behaviour
+        return false;
+    }
+
+    function touchEnded() {
+        // console.log(floor(touchX) + "," + floor(touchY));
+        var x_diff = touchX - old_touchX;
+        var y_diff = touchY - old_touchY;
+
+        if (snake.xDir == 0) { //snake going up or down
+            //console.log(x_diff);
+            if (x_diff > 40)
+                snake.set_dir(1, 0);
+            else if (x_diff < -40)
+                snake.set_dir(-1, 0);
+        } else if (snake.yDir == 0) { //snake going left or right
+            //console.log(y_diff);
+            if (y_diff > 40)
+                snake.set_dir(0, 1);
+            else if (y_diff < -40)
+                snake.set_dir(0, -1);
+        }
+        return false;
+    }
+
+    function pickFoodLocation() {
+        //food
+        var cols = floor(500 / 20);
+        var rows = floor(500 / 20);
+        food = createVector(floor(random(cols)), floor(random(rows)));
+        food.mult(20);
+    }
+</script>
+<script>
+    function Snake() {
+        this.x = (floor(random(floor((500 - 20) / 20)))) * 20;
+        this.y = (floor(random(floor((500 - 20) / 20)))) * 20;
+        this.xDir = 1;
+        this.yDir = 0;
+        this.speed = 20;
+        this.score = 0;
+        this.eatAt = 0;
+        this.snakeLength = 0;
+        this.tail = [];
+        this.color = ['white', 'gold', 'cornflowerblue', 'lightseagreen', 'silver', 'tomato', 'slateblue', 'sandybrown', 'yellowgreen', 'hotpink'];
+        this.display = function() {
+            var index = floor((this.score % 500) / 50);
+            fill(this.color[index]);
+            stroke(this.color[index]);
+            //for the tail
+            for (var i = 0; i < this.tail.length; i++) {
+                rect(this.tail[i].x, this.tail[i].y, 20, 20);
+            }
+            //for the head
+            if (this.yDir == 0)
+                if (this.xDir == 1)
+                    rect(this.x, this.y, 20, 20, 0, 10, 10, 0);
+                else
+                    rect(this.x, this.y, 20, 20, 10, 0, 0, 10);
+            else if (this.xDir == 0)
+                if (this.yDir == 1)
+                    rect(this.x, this.y, 20, 20, 0, 0, 10, 10);
+                else
+                    rect(this.x, this.y, 20, 20, 10, 10, 0, 0);
+        };
+        this.update = function() {
+
+            for (var i = 0; i <= this.tail.length - 2; i++) {
+                this.tail[i] = this.tail[i + 1];
+            }
+            this.tail[this.snakeLength - 1] = createVector(this.x, this.y);
+
+            this.x += this.xDir * this.speed;
+            this.y += this.yDir * this.speed;
+
+            //put constraint
+            this.x = constrain(this.x, 0, 500 - 20);
+            this.y = constrain(this.y, 0, 500 - 20);
+        };
+        this.set_dir = function(x, y) {
+            this.xDir = x;
+            this.yDir = y;
+        };
+        this.eat = function() {
+            for (var i = 0; i < 6; i++) {
+                var d = dist(this.x, this.y, foods[i].x, foods[i].y);
+                if (d < 5) {
+                    this.snakeLength++;
+                    this.score += 10;
+                    var fr = getFrameRate();
+                    fr = floor(fr);
+                    if (this.score % 50 == 0 && this.score != 0 && fr <= 30) {
+                        frameRate(fr + 3);
+                        console.log(fr);
+                    }
+                    foods[i] = null;
+                    this.eatAt = i;
+                    return true;
+                }
+            }
+        };
+        this.die = function() {
+            if (this.tail.length == 0) {
+                if (this.x >= 500 - 20 || this.y >= 500 - 20 || this.x <= 0 || this.y <= 0)
+                    return true;
+            } else if (this.tail.length != 0) {
+                for (var i = 0; i < this.tail.length; i++) {
+                    var pos = this.tail[i];
+                    var d = dist(this.x, this.y, pos.x, pos.y);
+                    if (d < 5) {
+                        this.score = 0;
+                        this.total = 0;
+                        this.tail = [];
+                        return true;
+                    }
+                }
+            } else {
+                return false;
+            }
+        };
+    }
+</script>
+
+</html>

@@ -640,10 +640,14 @@
 </head>
 
 <body>
-    It is now {{ current_date }}
+
+
+    <!--Header Nav Bar -->
     <header>
-        <div>
+        It is now {{ current_date }}
+        <div class="container-fluid">
             <h1 class="title-global"><a href="/">Vlagoidis Nikolaos</a></h1>
+
             <nav>
                 <ul>
                     <li><a href="#">[About Me]</a></li>
@@ -652,20 +656,30 @@
                     <li><a href="#">[Log In]</a></li>
                 </ul>
             </nav>
+
+
+
         </div>
+
     </header>
-    <h2>
-       Site Under Construction <span id="Foo">...</span>
-    </h2>
-    <br />
-    <br />
-    <p>
-        Meanwhile have some fun!
-        <input type="button" class="btn btn-default" value="Restart Game" onClick="window.location.reload()"></p>
 
 
+    <div class="container-fluid">
+
+        <h2>
+                  Site Under Construction <span id="Foo">...</span>
+        </h2>
+        <br />
+        <br />
+        <p>
+            Meanwhile have some fun!
+            <input type="button" class="btn btn-default" value="Restart Game" onClick="window.location.reload()"></p>
+
+
+    </div>
 
 </body>
+
 <script type="text/javascript">
     $(document).ready(function() {
         var f = document.getElementById('Foo');

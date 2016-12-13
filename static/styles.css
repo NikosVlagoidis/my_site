@@ -101,6 +101,8 @@ a.supporter:hover {
 }
 
 header {
+  padding:40px;
+  text-align:left;
   white-space: nowrap;
   cursor: default;
   z-index: 100;
@@ -128,9 +130,7 @@ header .user {
   display: inline-block;
   padding-left: 1em;
 }
-header .user .star-count {
-  color: #ffff66;
-}
+
 header nav {
   display: inline-block;
 }
@@ -179,110 +179,7 @@ input[type="submit"]:hover {
   border: 0
 }
 
-article {
-  width: 45em;
-  margin-bottom: 2em;
-  margin-top: 2em;
-}
-article:first-child {
-  margin-top: 0;
-}
-article h2 {
-  color: #ffffff;
-  margin-top: 1em;
-  margin-bottom: 1em;
-  white-space: nowrap;
-}
-article h2 + * {
-  margin-top: 0;
-}
-article em {
-  color: #ffffff;
-  font-style: normal;
-  text-shadow: 0 0 5px #ffffff;
-}
-article em.star {
-  color: #ffff66;
-  font-style: normal;
-  text-shadow: 0 0 5px #ffff66;
-}
-article a {
-  white-space: nowrap;
-}
-article .aside {
-  opacity: .7;
-}
-article ul {
-  list-style-type: none;
-  padding: 0;
-}
-article li {
-  padding-left: 2.5em;
-  position: relative;
-}
-article li:before {
-  content: "\00a0\00a0-\00a0";
-  position: absolute;
-  left: 0;
-  top: 0;
-}
-.day-success {
-  color: #ffff66;
-  text-shadow: 0 0 5px #ffff66;
-}
 
-form#settings label img {
-  vertical-align: bottom;
-  position: relative;
-  top: -3px;
-  margin-right: .3em;
-}
-form#settings input[type="radio"] { display: none; }
-form#settings input[type="radio"] ~ span {
-  cursor: pointer;
-  display: inline-block;
-  min-width: 30em;
-}
-form#settings input[type="radio"] ~ span:before {
-  content: "( ) ";
-}
-form#settings input[type="radio"] ~ span:hover {
-  background-color: #19193b;
-}
-form#settings input[type="radio"]:checked ~ span {
-  color: #ffffff;
-}
-form#settings input[type="radio"]:checked ~ span:before {
-  content: "(O) ";
-}
-form#settings input[type="checkbox"] { display: none; }
-form#settings input[type="checkbox"] ~ span {
-  cursor: pointer;
-  display: inline-block;
-  min-width: 30em;
-}
-form#settings input[type="checkbox"] ~ span:before {
-  content: "[ ] ";
-}
-form#settings input[type="checkbox"] ~ span:hover {
-  background-color: #19193b;
-}
-form#settings input[type="checkbox"]:checked ~ span {
-  color: #ffffff;
-}
-form#settings input[type="checkbox"]:checked ~ span:before {
-  content: "[X] ";
-}
-form#settings input[type="checkbox"]:disabled ~ span {
-  opacity: .3;
-  cursor: default;
-}
-form#settings input[type="checkbox"]:disabled ~ span:before {
-  content: "[-] ";
-}
-form#settings input[type="checkbox"]:disabled ~ span:hover {
-  background-color: transparent;
-}
 
 .share {
   color: #009900;
@@ -312,136 +209,4 @@ form#settings input[type="checkbox"]:disabled ~ span:hover {
 .share:hover .share-content {
   max-width: 45em;
   transition: max-width .2s 0s;
-}
-
-.puzzle-input {
-  border: 1px solid #999999;
-  background: #333333;
-  color: #ffffff;
-  text-shadow: 0 0 5px #ffffff;
-}
-
-.calendar {
-  cursor: default;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: -moz-none;
-  -o-user-select: none;
-  user-select: none;
-}
-.calendar > span {
-  color: #333333;
-}
-.calendar > a {
-  text-decoration: none;
-  color: #666666;
-  outline: none;
-  cursor: default;
-}
-.calendar a:hover {
-  background-color: #1e1e46;
-  background-color: rgba(119,119,165,.2);
-  cursor: pointer;
-}
-#calendar-countdown {
-  padding-left: .5em;
-}
-.calendar .calendar-day { color: #666666; }
-.calendar a .calendar-day { color: #cccccc; }
-.calendar a .calendar-mark-complete,
-.calendar a .calendar-mark-verycomplete { visibility: hidden; }
-.calendar a.calendar-complete .calendar-mark-complete,
-.calendar a.calendar-verycomplete .calendar-mark-complete { visibility: visible; color: #ffff66; }
-.calendar a.calendar-verycomplete .calendar-mark-verycomplete { visibility: visible; color: #ffff66; }
-
-.calendar .calendar-day-new { animation: anim-day-new 5s; }
-.calendar .calendar-day-new .calendar-day { animation: anim-day-new-day 5s; }
-@keyframes anim-day-new {
-  0%   { color: #333333; text-shadow: 0 0 5px transparent; }
-  25%  { color: #ffffff; text-shadow: 0 0 5px #ffffff; }
-  100% { color: #666666; text-shadow: 0 0 5px transparent; }
-}
-@keyframes anim-day-new-day {
-  0%   { color: #666666; text-shadow: 0 0 5px transparent; }
-  25%  { color: #ffffff; text-shadow: 0 0 5px #ffffff; }
-  100% { color: #cccccc; text-shadow: 0 0 5px transparent; }
-}
-
-.stats > span, .stats > span .stats-firstonly, .stats > span .stats-both {
-  color: #666666;
-}
-.stats > a {
-  color: #cccccc;
-  min-width: 35em;
-  display: inline-block;
-}
-.stats > a:hover {
-  background-color: #1e1e46;
-}
-.stats-firstonly {
-  color: #666699;
-}
-.stats-both {
-  color: #ffff66;
-}
-
-.leaderboard-daylinks {
-  cursor: default;
-}
-.leaderboard-daylinks-selected {
-  color: #ffffff;
-  text-shadow: 0 0 5px #ffffff;
-}
-.leaderboard-daydesc-first {
-  color: #666699;
-}
-.leaderboard-daydesc-both {
-  color: #ffff66;
-}
-.leaderboard-entry {
-  white-space: pre;
-}
-.leaderboard-entry .leaderboard-totalscore {
-  color: #ffffff;
-}
-.leaderboard-anon {
-  opacity: .6;
-}
-.leaderboard-userphoto {
-  display: inline-block;
-  height: 20px;
-  width: 20px;
-  margin: 0 .5em;
-  text-align: center;
-}
-.leaderboard-userphoto img {
-  height: 20px;
-  max-width: 20px;
-  vertical-align: middle;
-  position: relative;
-  top: -2px;
-}
-.leaderboard-time {
-  opacity: .5;
-}
-
-.privboard-row {
-  white-space: pre;
-}
-.privboard-row .star-count {
-  color: #ffff66;
-}
-.privboard-name {
-  vertical-align: text-bottom;
-}
-.privboard-day-locked     { color: #333333; }
-.privboard-star-locked    { visibility: hidden; }
-.privboard-star-unlocked  { color: #333333; }
-.privboard-star-firstonly { color: #666699; }
-.privboard-star-both      { color: #ffff66; }
-.privboard-delbtn { opacity:.33; }
-.privboard-row:hover .privboard-delbtn { opacity:1; }
-
-.sponsors {
-  width: 46em; /*76 characters*/
 }
